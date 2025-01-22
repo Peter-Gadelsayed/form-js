@@ -2,6 +2,7 @@
 var productName = document.getElementById('productName');
 var productPrice = document.getElementById('productPrice');
 var productDEsc = document.getElementById('productDesc');
+var addBtn = document.getElementById('Add');
 
 var tableBody = document.getElementById('result');
 
@@ -16,6 +17,8 @@ if (localStorage.getItem("productsList")) {
 } else {
     products = [];
 }
+
+addBtn.addEventListener("click", addProduct)
 
 function addProduct() {
 
