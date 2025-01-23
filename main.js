@@ -29,6 +29,11 @@ addBtn.addEventListener("click", function () {
 
 function addProduct() {
 
+    if (productName.value.trim() == "" || productPrice.value.trim() == "" || productDEsc.value.trim() == "") {
+        alert("Please fill in all fields.");
+        return;
+    }
+
     var product = {
         productName: productName.value,
         productPrice: productPrice.value,
@@ -111,6 +116,12 @@ function selectProduct(i) {
 }
 
 function updateProduct() {
+
+    if (productName.value.trim() == "" || productPrice.value.trim() == "" || productDEsc.value.trim() == "") {
+        alert("Please fill in all fields.");
+        return;
+    }
+
     var product = {
         productName: productName.value,
         productPrice: productPrice.value,
