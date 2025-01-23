@@ -3,6 +3,7 @@ var productName = document.getElementById('productName');
 var productPrice = document.getElementById('productPrice');
 var productDEsc = document.getElementById('productDesc');
 var addBtn = document.getElementById('Add');
+var selectedIndex = 0;
 
 var tableBody = document.getElementById('result');
 
@@ -18,7 +19,13 @@ if (localStorage.getItem("productsList")) {
     products = [];
 }
 
-addBtn.addEventListener("click", addProduct)
+addBtn.addEventListener("click", function () {
+    if (addBtn.innerHTML == "Add Product") {
+        addProduct();
+    } else {
+        updateProduct();
+    }
+});
 
 function addProduct() {
 
@@ -50,6 +57,8 @@ function displayProducts(products) {
                         <td>${products[i].productName}</td>
                         <td>${products[i].productPrice}</td>
                         <td>${products[i].productDesc}</td>
+                        <td><button id="update" class="btn btn-success" onclick="selectProduct(${i})" >Update</button></td>
+                        <td><button id="del" class="btn btn-danger" onclick="deleteProduct(${i})" >Delete</button></td>
                     </tr>    
                 `
 
@@ -63,6 +72,10 @@ function clearForm() {
     productName.value = '';
     productPrice.value = '';
     productDEsc.value = '';
+    addBtn.innerHTML = "Add Product";
+    addBtn.classList.remove("btn-success");
+    addBtn.classList.add("btn-primary");
+
 
 }
 
@@ -74,5 +87,39 @@ function searchProduct(term) {
     console.log(newData);
 
     displayProducts(newData);
+
+}
+
+function deleteProduct(i) {
+
+    products.splice(i, 1);
+    localStorage.setItem("productsList", JSON.stringify(products));
+    displayProducts(products);
+    console.log(products);
+
+}
+
+function selectProduct(i) {
+    selectedIndex = i;
+    var product = products[i]
+    productName.value = product.productName;
+    productPrice.value = product.productPrice;
+    productDEsc.value = product.productDesc;
+    addBtn.innerHTML = "Update Product";
+    addBtn.classList.remove("btn-primary");
+    addBtn.classList.add("btn-success");
+}
+
+function updateProduct() {
+    var product = {
+        productName: productName.value,
+        productPrice: productPrice.value,
+        productDesc: productDEsc.value
+    };
+    products[selectedIndex] = product;
+    localStorage.setItem("productsList", JSON.stringify(products));
+    displayProducts(products);
+    console.log(products);
+    clearForm();
 
 }
