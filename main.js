@@ -3,7 +3,7 @@ var productName = document.getElementById('productName');
 var productPrice = document.getElementById('productPrice');
 var productDEsc = document.getElementById('productDesc');
 var addBtn = document.getElementById('Add');
-var selectedIndex = 0;
+var selectedIndex = -1;
 
 var tableBody = document.getElementById('result');
 
