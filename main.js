@@ -4,6 +4,11 @@ var productPrice = document.getElementById('productPrice');
 var productDEsc = document.getElementById('productDesc');
 var addBtn = document.getElementById('Add');
 var selectedIndex = -1;
+var productNameRegex = /^[A-Z][a-z]{2,4}$/;
+var productPriceRegex = /^[1-9][0-9]{2,4}$|(100000)$/;
+var productDEscRegex = /^[a-zA-Z]{3,100}$/;
+var charCount = document.getElementById('charCount');
+
 
 var tableBody = document.getElementById('result');
 
@@ -19,6 +24,12 @@ if (localStorage.getItem("productsList")) {
     products = [];
 }
 
+productName.addEventListener("keyup", productNameValid);
+productPrice.addEventListener("keyup", productPriceValid)
+productDEsc.addEventListener("keyup", productDEscValid)
+productDEsc.addEventListener('input', countChar);
+
+
 addBtn.addEventListener("click", function () {
     if (addBtn.innerHTML == "Add Product") {
         addProduct();
@@ -26,6 +37,53 @@ addBtn.addEventListener("click", function () {
         updateProduct();
     }
 });
+
+function productNameValid() {
+    if (productNameRegex.test(productName.value)) {
+        productName.classList.remove("is-invalid");
+        productName.classList.add("is-valid");
+    } else if (productName.value == "") {
+        productName.classList.remove("is-invalid");
+        productName.classList.remove("is-valid");
+
+    } else {
+        productName.classList.remove("is-valid");
+        productName.classList.add("is-invalid");
+    }
+}
+
+function productPriceValid() {
+    if (productPriceRegex.test(productPrice.value)) {
+        productPrice.classList.remove("is-invalid");
+        productPrice.classList.add("is-valid");
+    } else if (productPrice.value == "") {
+        productPrice.classList.remove("is-invalid");
+        productPrice.classList.remove("is-valid");
+
+    } else {
+        productPrice.classList.remove("is-valid");
+        productPrice.classList.add("is-invalid");
+    }
+}
+
+function productDEscValid() {
+    if (productDEscRegex.test(productDEsc.value)) {
+        productDEsc.classList.remove("is-invalid");
+        productDEsc.classList.add("is-valid");
+    } else if (productDEsc.value == "") {
+        productDEsc.classList.remove("is-invalid");
+        productDEsc.classList.remove("is-valid");
+
+    } else {
+        productDEsc.classList.remove("is-valid");
+        productDEsc.classList.add("is-invalid");
+    }
+}
+
+function countChar() {
+    var lengthTxt = productDEsc.value.length;
+    charCount.innerHTML = lengthTxt + ' characters';
+}
 
 function addProduct() {
 
