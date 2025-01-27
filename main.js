@@ -6,7 +6,7 @@ var addBtn = document.getElementById('Add');
 var selectedIndex = -1;
 var productNameRegex = /^[A-Z][a-z]{2,4}$/;
 var productPriceRegex = /^[1-9][0-9]{2,4}$|(100000)$/;
-var productDEscRegex = /^[a-zA-Z]{3,100}$/;
+var productDEscRegex = /^[a-z|" "|A-Z]{3,100}$/;
 var charCount = document.getElementById('charCount');
 
 
