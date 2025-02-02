@@ -1,18 +1,16 @@
 
-var productName = document.getElementById('productName');
-var productPrice = document.getElementById('productPrice');
-var productDEsc = document.getElementById('productDesc');
-var addBtn = document.getElementById('Add');
-var selectedIndex = -1;
-var productNameRegex = /^[A-Z][a-z]{2,4}$/;
-var productPriceRegex = /^[1-9][0-9]{2,4}$|(100000)$/;
-var productDEscRegex = /^[a-z|" "|A-Z]{3,100}$/;
-var charCount = document.getElementById('charCount');
+const productName = document.getElementById('productName');
+const productPrice = document.getElementById('productPrice');
+const productDEsc = document.getElementById('productDesc');
+const addBtn = document.getElementById('Add');
+const charCount = document.getElementById('charCount');
+const tableBody = document.getElementById('result');
+let selectedIndex = -1;
+let productNameRegex = /^[A-Z][a-z]{2,4}$/;
+let productPriceRegex = /^[1-9][0-9]{2,4}$|(100000)$/;
+let productDEscRegex = /^[a-z|0-9|" "|A-Z]{3,100}$/;
+let products;
 
-
-var tableBody = document.getElementById('result');
-
-var products;
 
 if (localStorage.getItem("productsList")) {
 
@@ -30,7 +28,7 @@ productDEsc.addEventListener("keyup", productDEscValid)
 productDEsc.addEventListener('input', countChar);
 
 
-addBtn.addEventListener("click", function () {
+addBtn.addEventListener("click", () => {
     if (addBtn.innerHTML == "Add Product") {
         addProduct();
     } else {
@@ -81,7 +79,7 @@ function productDEscValid() {
 }
 
 function countChar() {
-    var lengthTxt = productDEsc.value.length;
+    let lengthTxt = productDEsc.value.length;
     charCount.innerHTML = lengthTxt + ' characters';
 }
 
@@ -92,7 +90,7 @@ function addProduct() {
         return;
     }
 
-    var product = {
+    let product = {
         productName: productName.value,
         productPrice: productPrice.value,
         productDesc: productDEsc.value
@@ -107,13 +105,14 @@ function addProduct() {
     displayProducts(products);
 
     clearForm();
+
 }
 
 function displayProducts(products) {
 
-    var result = '';
+    let result = '';
 
-    for (var i = 0; i < products.length; i++) {
+    for (let i = 0; i < products.length; i++) {
 
         result += `
                     <tr>
@@ -139,11 +138,16 @@ function clearForm() {
     addBtn.classList.remove("btn-success");
     addBtn.classList.add("btn-primary");
 
-
+    productName.classList.remove("is-invalid");
+    productName.classList.remove("is-valid");
+    productPrice.classList.remove("is-invalid");
+    productPrice.classList.remove("is-valid");
+    productDEsc.classList.remove("is-invalid");
+    productDEsc.classList.remove("is-valid");
 }
 
 function searchProduct(term) {
-    var newData = products.filter(function (product) {
+    let newData = products.filter((product) => {
         return product.productName.includes(term.trim());
     })
 
@@ -164,7 +168,7 @@ function deleteProduct(i) {
 
 function selectProduct(i) {
     selectedIndex = i;
-    var product = products[i]
+    let product = products[i]
     productName.value = product.productName;
     productPrice.value = product.productPrice;
     productDEsc.value = product.productDesc;
@@ -180,7 +184,7 @@ function updateProduct() {
         return;
     }
 
-    var product = {
+    let product = {
         productName: productName.value,
         productPrice: productPrice.value,
         productDesc: productDEsc.value
